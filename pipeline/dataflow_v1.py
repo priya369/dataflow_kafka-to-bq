@@ -144,12 +144,9 @@ with beam.Pipeline(options=pipeline_options) as p:
         # Read from Kafka topic
         | 'Read from Kafka' >> ReadFromKafka(
             consumer_config= {
-                      'bootstrap.servers': f'bootstrap.{kafka_cluster_name}.{region}.managedkafka.{project_id}.cloud.goog:{port}',
-                      'security.protocol': 'SASL_SSL',
-                      'sasl.mechanisms': 'OAUTHBEARER',
-                      'oauth_cb': make_token,
+                      'bootstrap.servers': 'bootstrap.dataopsguru-kafka.us-central1.managedkafka.valid-verbena-437709-h5.cloud.goog:9092',
                    },
-            topics=[kafka_topic_name],
+            topics=['dataops-kafka-topic'],
             with_metadata=False,
         )
         # Parse JSON messages
