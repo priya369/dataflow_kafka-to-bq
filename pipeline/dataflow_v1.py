@@ -144,7 +144,12 @@ with beam.Pipeline(options=pipeline_options) as p:
         p
         # Read from Kafka topic
         | 'Read from Kafka' >> ReadFromKafka(
-            consumer_config= config,
+            consumer_config= {
+                      'bootstrap.servers': f'bootstrap.{kafka_cluster_name}.{region}.managedkafka.{project_id}.cloud.goog:{port}',
+                      'security.protocol': 'SASL_SSL',
+                      'sasl.mechanisms': 'OAUTHBEARER',
+                      'oauth_cb': make_token,
+                   },
             topics=[kafka_topic_name],
             with_metadata=False,
         )
