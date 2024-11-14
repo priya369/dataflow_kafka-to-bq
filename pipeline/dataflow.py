@@ -1,7 +1,7 @@
 import apache_beam as beam
 from apache_beam.io.kafka import ReadFromKafka
 from apache_beam.io.gcp.bigquery import WriteToBigQuery
-from apache_beam.options.pipeline_options import PipelineOptions, StandardOptions
+from apache_beam.options.pipeline_options import PipelineOptions
 import json
 
 # Kafka and BigQuery configuration
@@ -24,13 +24,7 @@ table_schema = {
     ]
 }
 
-# Pipeline options
-class DataPipelineOptions(PipelineOptions):
-    @classmethod
-    def _add_argparse_args(cls, parser):
-        parser.add_argument('--runner', default='DataflowRunner')  # Change to 'DirectRunner' for local testing
-
-pipeline_options = DataPipelineOptions(
+pipeline_options = PipelineOptions(
     runner='DataflowRunner',   #for Dataflow job change to runner='DataflowRunner'
     project='valid-verbena-437709-h5',
     region='us-central1',   #for Dataflow job change to 'us-west1'
@@ -46,7 +40,7 @@ pipeline_options = DataPipelineOptions(
     machine_type='n1-standard-4',  #Specify the machine type for the workers
     service_account_email='dataops-guru-sa@valid-verbena-437709-h5.iam.gserviceaccount.com' 
 )
-pipeline_options.view_as(StandardOptions).streaming = True
+
 
 def parse_kafka_message(element):
     """Parse Kafka message from bytes to JSON."""
