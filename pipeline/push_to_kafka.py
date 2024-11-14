@@ -5,8 +5,8 @@ import json
 import time
 
 # Initialize Kafka producer
-KAFKA_TOPIC = 'nifty_stock_data'
-KAFKA_SERVER = 'localhost:9092'  # Replace with your Kafka broker address
+KAFKA_TOPIC = 'dataops-kafka-topic'
+KAFKA_SERVER = 'bootstrap.dataops-kafka.us-central1.managedkafka.valid-verbena-437709-h5.cloud.goog:9092'  # Replace with your Kafka broker address
 producer = KafkaProducer(
     bootstrap_servers=KAFKA_SERVER,
     value_serializer=lambda x: json.dumps(x).encode('utf-8')
@@ -27,12 +27,12 @@ for symbol in nifty_50_symbols:
         for index, row in df.iterrows():
             message = {
                 'symbol': symbol,
-                'date': row['Date'],
-                'open': row['Open'],
-                'high': row['High'],
-                'low': row['Low'],
-                'close': row['Close'],
-                'volume': row['Volume']
+                'date': row['CH_TIMESTAMP'],
+                'open': row['CH_OPENING_PRICE'],
+                'high': row['CH_TRADE_HIGH_PRICE'],
+                'low': row['CH_TRADE_LOW_PRICE'],
+                'close': row['CH_CLOSING_PRICE'],
+                'vwap': row['VWAP']
             }
             producer.send(KAFKA_TOPIC, value=message)
             print(f"Sent to Kafka: {message}")

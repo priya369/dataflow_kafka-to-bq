@@ -5,11 +5,11 @@ from apache_beam.options.pipeline_options import PipelineOptions, StandardOption
 import json
 
 # Kafka and BigQuery configuration
-PROJECT_ID = 'your_project_id'
-DATASET_ID = 'your_dataset'
-TABLE_ID = 'nifty_50_stock_data'
-KAFKA_TOPIC = 'nifty_stock_data'
-KAFKA_SERVER = 'localhost:9092'  # Replace with your Kafka broker address
+PROJECT_ID = 'valid-verbena-437709-h5'
+DATASET_ID = 'nifty50'
+TABLE_ID = 'nifty50_historical_data_65'
+KAFKA_TOPIC = 'dataops-kafka-topic'
+KAFKA_SERVER = 'bootstrap.dataops-kafka.us-central1.managedkafka.valid-verbena-437709-h5.cloud.goog:9092'  # Replace with your Kafka broker address
 
 # Define the BigQuery table schema
 table_schema = {
@@ -20,7 +20,7 @@ table_schema = {
         {'name': 'high', 'type': 'FLOAT'},
         {'name': 'low', 'type': 'FLOAT'},
         {'name': 'close', 'type': 'FLOAT'},
-        {'name': 'volume', 'type': 'INTEGER'}
+        {'name': 'vwap', 'type': 'FLOAT'}
     ]
 }
 
@@ -31,10 +31,20 @@ class DataPipelineOptions(PipelineOptions):
         parser.add_argument('--runner', default='DataflowRunner')  # Change to 'DirectRunner' for local testing
 
 pipeline_options = DataPipelineOptions(
-    streaming=True,
-    project=PROJECT_ID,
-    region='us-central1',
-    temp_location='gs://your-bucket/temp'
+    runner='DataflowRunner',   #for Dataflow job change to runner='DataflowRunner'
+    project='valid-verbena-437709-h5',
+    region='us-central1',   #for Dataflow job change to 'us-west1'
+    temp_location='gs://dataops-dataflow-2024/temp',
+    staging_location='gs://dataops-dataflow-2024/staging',
+    streaming=True,  #Enable streaming mode
+    #Dataflow parameters that are optional
+    job_name='streaming-kafka-bq-nifty50',  #Set the Dataflow job name here
+    num_workers=3,  #Specify the number of workers
+    max_num_workers=10,  #Specify the maximum number of workers
+    disk_size_gb=100,  #Specify the disk size in GB per worker
+    autoscaling_algorithm='THROUGHPUT_BASED',  #Specify the autoscaling algorithm
+    machine_type='n1-standard-4',  #Specify the machine type for the workers
+    service_account_email='dataops-guru-sa@valid-verbena-437709-h5.iam.gserviceaccount.com' 
 )
 pipeline_options.view_as(StandardOptions).streaming = True
 
