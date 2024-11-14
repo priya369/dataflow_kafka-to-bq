@@ -73,10 +73,9 @@ class TokenProvider(object):
 # Confluent does not use a TokenProvider object
 # It calls a method
 def make_token(args):
-  """Method to get the Token"""
-  t = TokenProvider()
-  token = t.confluent_token()
-  return token
+    t = TokenProvider()
+    token, _ = t.confluent_token()
+    return token
 
 kafka_cluster_name = 'dataopsguru-kafka'
 region = 'us-central1'
