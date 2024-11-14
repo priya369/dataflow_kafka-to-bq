@@ -6,7 +6,7 @@ provider "google-beta" {
 data "google_project" "project" {}
 
 module "kafka_cluster" {
-  source = "./df_resource/module"  # Update with the actual path to your module
+  source = "./module/df_resource" # Update with the actual path to your module
   project_id = "valid-verbena-437709-h5"
   cluster_id         = "dataops-kafka"
   region             = "us-central1"
