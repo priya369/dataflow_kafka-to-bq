@@ -156,7 +156,7 @@ pipeline_options = PipelineOptions(
     streaming=True,  #Enable streaming mode
     requirements_file='requirements.txt',
     #Dataflow parameters that are optional
-    job_name='streaming-kafka-bq-nifty50-v2',  #Set the Dataflow job name here
+    job_name='streaming-kafka-bq-nifty50-v3',  #Set the Dataflow job name here
     num_workers=3,  #Specify the number of workers
     max_num_workers=10,  #Specify the maximum number of workers
     disk_size_gb=100,  #Specify the disk size in GB per worker
