@@ -12,7 +12,7 @@ import apache_beam as beam
 from apache_beam.io.kafka import ReadFromKafka
 from apache_beam.io.gcp.bigquery import WriteToBigQuery
 from apache_beam.options.pipeline_options import PipelineOptions
-from confluent_kafka import Consumer, KafkaException, KafkaError
+import confluent_kafka
 import json
 
 class TokenProvider(object):
@@ -92,7 +92,7 @@ class CustomKafkaConsumer(beam.DoFn):
 
     def setup(self):
         # Initialize Kafka consumer
-        self.consumer = Consumer(self.kafka_config)
+        self.consumer = confluent_kafka.Consumer(self.kafka_config)
         self.consumer.subscribe([self.topic])
 
     def process(self, element):
@@ -102,10 +102,10 @@ class CustomKafkaConsumer(beam.DoFn):
             if msg is None:
                 return
             if msg.error():
-                if msg.error().code() == KafkaError._PARTITION_EOF:
+                if msg.error().code() == confluent_kafka.KafkaError._PARTITION_EOF:
                     print(f"Reached end of partition: {msg.error()}")
                 else:
-                    raise KafkaException(msg.error())
+                    raise confluent_kafka.KafkaException(msg.error())
                 return
             
             # Decode and parse the Kafka message
