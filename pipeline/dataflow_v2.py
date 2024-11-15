@@ -13,7 +13,7 @@ import apache_beam as beam
 from apache_beam.io.kafka import ReadFromKafka
 from apache_beam.io.gcp.bigquery import WriteToBigQuery
 from apache_beam.options.pipeline_options import PipelineOptions
-from confluent_kafka import Consumer, KafkaException, KafkaError
+from confluent-kafka import Consumer, KafkaException, KafkaError
 import json
 
 class TokenProvider(object):
