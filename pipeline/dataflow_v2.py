@@ -154,7 +154,6 @@ pipeline_options = PipelineOptions(
     temp_location='gs://dataops-dataflow-2024/temp',
     staging_location='gs://dataops-dataflow-2024/staging',
     streaming=True,  #Enable streaming mode
-    requirements_file='requirements.txt',
     #Dataflow parameters that are optional
     job_name='streaming-kafka-bq-nifty50-v4',  #Set the Dataflow job name here
     num_workers=3,  #Specify the number of workers
