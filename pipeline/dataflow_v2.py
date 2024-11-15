@@ -156,14 +156,14 @@ pipeline_options = PipelineOptions(
     streaming=True,  #Enable streaming mode
     requirements_file='requirements.txt',
     #Dataflow parameters that are optional
-    job_name='streaming-kafka-bq-nifty50-v3',  #Set the Dataflow job name here
+    job_name='streaming-kafka-bq-nifty50-v4',  #Set the Dataflow job name here
     num_workers=3,  #Specify the number of workers
     max_num_workers=10,  #Specify the maximum number of workers
     disk_size_gb=100,  #Specify the disk size in GB per worker
     autoscaling_algorithm='THROUGHPUT_BASED',  #Specify the autoscaling algorithm
     machine_type='n1-standard-4',  #Specify the machine type for the workers
     service_account_email='dataops-guru-sa@valid-verbena-437709-h5.iam.gserviceaccount.com',
-    worker_harness_container_image ='gcr.io/valid-verbena-437709-h5/dataflow/kafka-image:latest'
+    worker_harness_container_image ='gcr.io/valid-verbena-437709-h5/dataflow/kafka-image:beam312'
 )
 
 
