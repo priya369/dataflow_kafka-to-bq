@@ -163,6 +163,7 @@ pipeline_options = PipelineOptions(
     autoscaling_algorithm='THROUGHPUT_BASED',  #Specify the autoscaling algorithm
     machine_type='n1-standard-4',  #Specify the machine type for the workers
     service_account_email='dataops-guru-sa@valid-verbena-437709-h5.iam.gserviceaccount.com' 
+    worker_harness_container_image ='gcr.io/valid-verbena-437709-h5/dataflow/kafka-image:latest'
 )
 
 
