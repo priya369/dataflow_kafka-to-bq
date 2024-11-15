@@ -6,14 +6,13 @@ import random
 import google.auth
 import google.auth.transport.urllib3
 import urllib3
-import confluent_kafka
 import functools
 import time
 import apache_beam as beam
 from apache_beam.io.kafka import ReadFromKafka
 from apache_beam.io.gcp.bigquery import WriteToBigQuery
 from apache_beam.options.pipeline_options import PipelineOptions
-from confluent-kafka import Consumer, KafkaException, KafkaError
+from confluent_kafka import Consumer, KafkaException, KafkaError
 import json
 
 class TokenProvider(object):
