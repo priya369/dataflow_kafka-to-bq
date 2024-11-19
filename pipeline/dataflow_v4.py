@@ -73,11 +73,13 @@ with beam.Pipeline(options=pipeline_options) as pipeline:
             expiry_seconds = (utc_expiry - datetime.datetime.now(datetime.timezone.utc)).total_seconds()
             return creds.token, time.time() + expiry_seconds
 
-    def make_token(args):
-        token_provider = TokenProvider()
-        token, expiry_time = token_provider.confluent_token()
-        return token
-
+    def fetch_oauth_token():
+       token_provider = TokenProvider()
+       token, expiry_time = token_provider.confluent_token()
+       return token
+    
+    # Pre-fetch the token
+    oauth_token = fetch_oauth_token()
     kafka_cluster_name = 'dataopsguru-kafka'
     region = 'us-central1'
     project_id = 'valid-verbena-437709-h5'
@@ -89,7 +91,7 @@ with beam.Pipeline(options=pipeline_options) as pipeline:
     'bootstrap.servers': f'bootstrap.{kafka_cluster_name}.{region}.managedkafka.{project_id}.cloud.goog:{port}',
     'security.protocol': 'SASL_SSL',
     'sasl.mechanisms': 'OAUTHBEARER',
-    'oauth_cb': make_token,
+    'oauth_cb': oauth_token,
     }
 
 
