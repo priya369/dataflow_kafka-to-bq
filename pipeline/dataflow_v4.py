@@ -67,6 +67,7 @@ with beam.Pipeline(options=pipeline_options) as pipeline:
     "bootstrap.servers": f'bootstrap.{kafka_cluster_name}.{region}.managedkafka.{project_id}.cloud.goog:{port}',
     "auto.offset.reset": "earliest",
     "security.protocol": "SASL_SSL",
+    "sasl.jaas.config" : "org.apache.kafka.common.security.plain.PlainLoginModule",
     "sasl.mechanisms": "PLAIN",
     "sasl.username": "dataops-guru-sa@valid-verbena-437709-h5.iam.gserviceaccount.com",
     "sasl.password": "bena-437709-h5",
